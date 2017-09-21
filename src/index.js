@@ -13,9 +13,11 @@ app.use(bodyParser.json());
 app.set('secret', process.env.JWT_SECRET)
 
 const port = process.env.PORT;
-app.route('/api');
+const router = express.Router();
 
-app.use((req, res, next) => {
+app.use('/api',router);
+
+router.use((req, res, next) => {
 
   function getFailureMessage() {
     return {
@@ -46,7 +48,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.get('/', function(req, res) {
+router.get('/clients',function(req, res) {
   var redisStorage = new RedisStorage();
 
   redisStorage.GetClients().then((clients) => {

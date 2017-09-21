@@ -30,7 +30,9 @@
     "url": "https://github.com/DFE-Digital/login.dfe.oidc.clients/issues"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./generate-certs.sh; ./node_modules/.bin/mocha --reporter spec",
+    "setup": "./generate-certs.sh",
+    "dev": "PORT=4432;NODE_ENV=dev; node src/index.js"
   },
   "homepage": "https://github.com/DFE-Digital/login.dfe.oidc.clients#readme"
 }

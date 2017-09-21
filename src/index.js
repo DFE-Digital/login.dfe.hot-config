@@ -1,57 +1,37 @@
 'use strict';
 
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const bodyParser  = require('body-parser');
-const RedisStorage = require('./RedisStorage/RedisService');
+const fs  = require('fs');
+const api = require('./api');
+const config = require('./config');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.set('secret', process.env.JWT_SECRET)
+app.set('secret', config.secret)
 
-const port = process.env.PORT;
-app.route('/api');
+app.use('/api',api(app.get('secret')));
 
-app.use((req, res, next) => {
+if (config.hostingEnvironment.env === 'dev') {
+  app.proxy = true;
 
-  function getFailureMessage() {
-    return {
-      success: false,
-      message: 'No token provided.'
-    };
-  }
+  const https = require('https');
+  const options = {
+    key: fs.readFileSync('./ssl/localhost.key'),
+    cert: fs.readFileSync('./ssl/localhost.cert'),
+    requestCert: false,
+    rejectUnauthorized: false,
+  };
+  const server = https.createServer(options, app);
 
-  // check header or url parameters or post parameters for token
-  if(req.headers.authorization === undefined || req.headers.authorization.split(' ').length !== 2){
-    return res.status(403).send(getFailureMessage());
-  }
-  var token = req.headers.authorization.split(' ')[1];
-
-  if (token) {
-
-    jwt.verify(token, app.get('secret'), function(err, decoded) {
-      if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
-      } else {
-        req.decoded = decoded;
-        next();
-      }
-    });
-
-  } else {
-    return res.status(403).send(getFailureMessage());
-  }
-});
-
-app.get('/', function(req, res) {
-  var redisStorage = new RedisStorage();
-
-  redisStorage.GetClients().then((clients) => {
-    res.send(clients);
+  server.listen(config.hostingEnvironment.port, () => {
+    console.log(`Dev server listening on https://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
   });
-});
-
-app.listen(port);
+} else {
+  app.listen(config.hostingEnvironment.port, () => {
+    console.log(`Dev server listening on http://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
+  });
+}

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/DFE-Digital/login.dfe.oidc.clients.svg?branch=master)](https://travis-ci.org/DFE-Digital/login.dfe.oidc.clients)
+
 # login.dfe.oidc.clients
 
 

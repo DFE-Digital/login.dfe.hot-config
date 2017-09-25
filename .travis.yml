@@ -1,3 +1,8 @@
 language: node_js
 node_js:
-  - "8.4"
+- '8.4'
+notifications:
+  slack:
+    secure: l9+Q4rjGkGy5Ef7/Vb24oWleDSFS6bLPX66/vr95KH/0NBk0Tx8F+/POaIvSJUASTp2suCuh0Dh6bE0nNAJvOG68FHP5ipUPoLKL/3w6RQpD7Eey2B36KyMQ8eoIRsNcCrse/asA2b9GEjS6mbnDjNcPpAJ4eZ61sEi8TyUkVOQCFi+buTvy1NwluG58M8GkTjdEImv89699IjiyxZtahFQXu6ovCPdRz1j8dKUIsGe96FYvNnu9ttprf1OLqFe/n8ydy8nkEXHr55D/oC2fZgoNrJxiIQVzP3RDRuT0FsxYFwY11uWSz+mh6tmE53E0GKTtmB0Pf7YxLieuLVeQHPSQQhMs2Ods/qTz4lW/EzF/ThZlcvIAisg8NFzaf2XfrDr1gpVjxEEy0q5ab+sXbgOmV06CLY+I8bJGcSP1CNjHRNfeab402PXfpH8wSc8axdZuYnzgHmNg0m0t+ddo3vBOuFuojO4w2I0zXibMU3tQSr0MHrRVujLnIO3GbKxnZfgFf6KQjfCN3bks6+mNsAVjJpK7hryMZnObAxhZ9tWFpcHZe6U2oe4YLjuM16IMakYMr2hZvZh/xZcaCkkISZc0oGHqzG4+r4StypO9Yi9S7w7d10XS3KOONMfNOFTGUgiMPDL829AXFuPyuWopUKZ/AyehkXhJg1cy8PfHwSI=
+  on_success: change
+  on_failure: always

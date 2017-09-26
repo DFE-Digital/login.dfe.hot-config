@@ -26,7 +26,8 @@ To run the OIDC clients project the following environment variables need to be s
 
 The clients match the schema defined in [OIDC](https://github.com/panva/node-oidc-provider) The following is required as a minimum for the client definition
 
-```` {
+```` 
+{
   		"client_id": "foo4",
   		"client_secret": "bamr",
   		"redirect_uris": [

@@ -13,9 +13,9 @@ class ClientStorage {
     }
   }
 
-  async GetClients(){
+  async GetOIDCClients(){
     return new Promise((resolve, reject) => {
-      client.get('Clients').then((result) => {
+      client.get('OIDCClients').then((result) => {
         if(result === null || result === undefined){
           resolve(null);
         }

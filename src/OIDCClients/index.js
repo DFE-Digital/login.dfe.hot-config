@@ -25,24 +25,25 @@ const routeExport = (secret) => {
 
       if (token) {
 
-        jwt.verify(token, secret, function(err, decoded) {
-          if (err) {
-            return res.json({ success: false, message: 'Failed to authenticate token.' });
-          } else {
-            req.decoded = decoded;
-            next();
-          }
-        });
+        // jwt.verify(token, secret, function(err, decoded) {
+        //   if (err) {
+        //     return res.json({ success: false, message: 'Failed to authenticate token.' });
+        //   } else {
+        //     req.decoded = decoded;
+        //     next();
+        //   }
+        // });
+        next();
 
       } else {
         return res.status(403).send(getFailureMessage());
       }
     });
 
-    router.get('/clients',function(req, res) {
+    router.get('/',function(req, res) {
       var redisStorage = new RedisStorage();
 
-      redisStorage.GetClients().then((clients) => {
+      redisStorage.GetOIDCClients().then((clients) => {
         res.send(clients);
       });
     });

@@ -4,7 +4,7 @@ const aad = require('./AadAuthorisation');
 
 module.exports = (app, config) => {
   if (config.auth.type === 'secret') {
-   app.use(jwt(config.auth.secret));
+   return jwt(config.auth.secret);
   }
 
   if (config.auth.type === 'aad') {
@@ -16,6 +16,6 @@ module.exports = (app, config) => {
       passReqToCallback: false
     };
 
-    app.use(aad(app, options))
+    return aad(app, options)
   }
 };

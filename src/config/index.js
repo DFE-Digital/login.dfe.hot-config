@@ -12,7 +12,7 @@ module.exports = {
 
   // auth: {
   //   type: 'aad',
-  //   identityMetadata: "https://login.microsoftonline.com/27cc275f-b524-460e-b51c-c5532d1cc54f/.well-known/openid-configuration",
-  //   clientID: "f5f9ce9f-aef8-4993-a3d3-7c90142addb7"
+  //   identityMetadata: process.env.IDENTITY_METADATA,
+  //   clientID: process.env.CLIENT_ID
   // }
 };

@@ -7,14 +7,14 @@ const fs  = require('fs');
 const oidcClients = require('./OIDCClients');
 const samlClients = require('./SAMLClients');
 const config = require('./config');
-const useAuthentication = require('./Authorization');
+const auth = require('./Authorization');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-useAuthentication(app, config)
+app.use(auth(app, config));
 
 app.set('secret', config.secret);
 

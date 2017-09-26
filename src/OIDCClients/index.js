@@ -25,15 +25,14 @@ const routeExport = (secret) => {
 
       if (token) {
 
-        // jwt.verify(token, secret, function(err, decoded) {
-        //   if (err) {
-        //     return res.json({ success: false, message: 'Failed to authenticate token.' });
-        //   } else {
-        //     req.decoded = decoded;
-        //     next();
-        //   }
-        // });
-        next();
+        jwt.verify(token, secret, function(err, decoded) {
+          if (err) {
+            return res.json({ success: false, message: 'Failed to authenticate token.' });
+          } else {
+            req.decoded = decoded;
+            next();
+          }
+        });
 
       } else {
         return res.status(403).send(getFailureMessage());

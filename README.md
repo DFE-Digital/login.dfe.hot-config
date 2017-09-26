@@ -17,10 +17,11 @@ To run the hot config project the following environment variables need to be set
 
 **REDIS_CONNECTION** - This can be left blank for local development
 
-**JWT_SECRET** - This is the secret which has been used to create the JWT token and used to verify
+**JWT_SECRET** - This is the secret which has been used to create the JWT token and used to verify 
 
 **PORT** - This is the port that you want the application to run on
 
+**See the config/index.js for further authorisation options (such as AAD)**
 
 ## OIDC Clients schema
 

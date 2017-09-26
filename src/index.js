@@ -3,21 +3,30 @@
 const express = require('express');
 const bodyParser  = require('body-parser');
 const fs  = require('fs');
-const jwt = require('./Authorization/JwtAuthorization');
+
 const oidcClients = require('./OIDCClients');
 const samlClients = require('./SAMLClients');
 const config = require('./config');
+const useAuthentication = require('./Authorization');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(jwt(config.secret));
+
+useAuthentication(app, config)
 
 app.set('secret', config.secret);
 
 app.use('/oidcclients',oidcClients());
 app.use('/samlclients',samlClients());
+
+// Corrs
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;

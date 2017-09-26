@@ -24,9 +24,11 @@ To run the hot config project the following environment variables need to be set
 
 ## OIDC Clients schema
 
-The clients match the schema defined in [OIDC](https://github.com/panva/node-oidc-provider) The following is required as a minimum for the client definition
+`GET /oidcclients`
 
-```` 
+The OIDC clients match the schema defined in [OIDC](https://github.com/panva/node-oidc-provider) The following is required as a minimum for the client definition
+
+```
 {
     "client_id": "foo4",
     "client_secret": "bamr",
@@ -34,5 +36,26 @@ The clients match the schema defined in [OIDC](https://github.com/panva/node-oid
         "https://localhost:1234/asdasd"
     ]
 }
-````
+```
 This should be added to the OIDCClients collection in redis.
+
+
+## SAML Clients schema
+
+`GET /samlclients`
+
+The following is the schema for SAML clients
+
+```
+[
+	{
+		"id": "470d8218-a230-11e7-abc4-cec278b6b50a",
+		"identifierUri": "https://localhost:4432/470d8218-a230-11e7-abc4-cec278b6b50a",
+		"returnUrls": [
+			"https://localhost:4432/"
+		],
+		"publicKeyId": "470d8218-a230-11e7-abc4-cec278b6b50a"
+	}
+]
+```
+This should be added to the SAMLClients collection in redis.

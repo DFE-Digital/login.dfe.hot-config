@@ -18,4 +18,6 @@ module.exports = (app, config) => {
 
     return aad(app, options)
   }
+
+  throw new Error('no auth strategy defined!')
 };

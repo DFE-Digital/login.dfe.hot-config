@@ -3,17 +3,21 @@
 const express = require('express');
 const bodyParser  = require('body-parser');
 const fs  = require('fs');
-const api = require('./api');
+const jwt = require('./Authorization/JwtAuthorization');
+const oidcClients = require('./OIDCClients');
+const samlClients = require('./SAMLClients');
 const config = require('./config');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(jwt(config.secret));
 
-app.set('secret', config.secret)
+app.set('secret', config.secret);
 
-app.use('/api',api(app.get('secret')));
+app.use('/oidcclients',oidcClients());
+app.use('/samlclients',samlClients());
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;

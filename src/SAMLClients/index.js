@@ -7,7 +7,7 @@ const RedisStorage = require('./../RedisStorage/RedisService');
 
 const router = express.Router();
 
-module.exports = (secret) => {
+module.exports = () => {
   router.get('/', function (req, res) {
     var redisStorage = new RedisStorage();
 

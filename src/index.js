@@ -3,7 +3,8 @@
 const express = require('express');
 const bodyParser  = require('body-parser');
 const fs  = require('fs');
-const api = require('./OIDCClients');
+const oidcClients = require('./OIDCClients');
+const samlClients = require('./SAMLClients');
 const config = require('./config');
 
 const app = express();
@@ -13,7 +14,8 @@ app.use(bodyParser.json());
 
 app.set('secret', config.secret)
 
-app.use('/oidcclients',api(app.get('secret')));
+app.use('/oidcclients',oidcClients(app.get('secret')));
+app.use('/samlclients',samlClients(app.get('secret')));
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;

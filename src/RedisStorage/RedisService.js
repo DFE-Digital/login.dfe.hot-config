@@ -24,7 +24,19 @@ class ClientStorage {
         resolve(parsedClients);
       });
     });
+  }
 
+  async GetSAMLClients() {
+    return new Promise((resolve, reject) => {
+      client.get('SAMLClients').then((result) => {
+        if(result === null || result === undefined){
+          resolve(null);
+        }
+        const parsedClients = JSON.parse(result);
+
+        resolve(parsedClients);
+      });
+    });
   }
 };
 

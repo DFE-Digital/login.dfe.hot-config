@@ -3,6 +3,8 @@
 const express = require('express');
 const bodyParser  = require('body-parser');
 const fs  = require('fs');
+const morgan = require('morgan');
+const winston = require('winston');
 
 const oidcClients = require('./OIDCClients');
 const samlClients = require('./SAMLClients');
@@ -10,9 +12,18 @@ const config = require('./config');
 const auth = require('./Authorization');
 
 const app = express();
+const logger = new (winston.Logger)({
+  colors: config.loggerSettings.colors,
+  transports: [
+    new (winston.transports.Console)({ level: 'info', colorize: true }),
+  ],
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.set('logger', logger);
+app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
+app.use(morgan('dev'));
 
 app.use(auth(app, config));
 
@@ -41,10 +52,10 @@ if (config.hostingEnvironment.env === 'dev') {
   const server = https.createServer(options, app);
 
   server.listen(config.hostingEnvironment.port, () => {
-    console.log(`Dev server listening on https://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
+    logger.info(`Dev server listening on https://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
   });
 } else {
   app.listen(config.hostingEnvironment.port, () => {
-    console.log(`Dev server listening on http://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
+    logger.info(`Dev server listening on http://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
   });
 }

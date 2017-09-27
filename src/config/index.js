@@ -20,6 +20,18 @@ const renderConfig = () => {
   };
 
   return {
+    loggerSettings: {
+      levels: {
+        info: 0,
+        ok: 1,
+        error: 2,
+      },
+      colors: {
+        info: 'yellow',
+        ok: 'green',
+        error: 'red',
+      },
+    },
     hostingEnvironment: {
       env: process.env.NODE_ENV ? process.env.NODE_ENV : 'dev',
       host: process.env.HOST ? process.env.HOST : 'localhost',

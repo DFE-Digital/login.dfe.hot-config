@@ -17,9 +17,25 @@ To run the hot config project the following environment variables need to be set
 
 **REDIS_CONNECTION** - This can be left blank for local development
 
-**JWT_SECRET** - This is the secret which has been used to create the JWT token and used to verify
-
 **PORT** - This is the port that you want the application to run on
+
+## Auth Options
+
+## Active Directory
+
+**AUTH_TYPE**='aad' 
+
+**IDENTITY_METADATA=** - AAD Meta data URL
+ 
+**CLIENT_ID** - AAD Application ID 
+
+
+## JWT
+
+**AUTH_TYPE**='secret'
+ 
+**JWT_SECRET** - This is the secret which has been used to create the JWT token and used to verify  
+
 
 
 ## OIDC Clients schema

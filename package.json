@@ -8,6 +8,8 @@
     "fs": "0.0.1-security",
     "ioredis": "^3.1.4",
     "jsonwebtoken": "^8.0.1",
+    "passport": "^0.4.0",
+    "passport-azure-ad": "^3.0.8",
     "path": "^0.12.7",
     "redis": "^2.8.0"
   },

@@ -9,6 +9,8 @@ const samlClients = require('./SAMLClients');
 const config = require('./config');
 const auth = require('./Authorization');
 
+console.log(JSON.stringify(config));
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));

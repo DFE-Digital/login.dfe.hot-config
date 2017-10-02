@@ -26,7 +26,10 @@ const renderConfig = () => {
       port: process.env.PORT ? process.env.PORT : 4432,
       protocol: isDev ? 'https' : 'http'
     },
-    auth: getAuthConfig()
+    auth: getAuthConfig(),
+    redis: {
+      url: process.env.REDIS_CONNECTION ? process.env.REDIS_CONNECTION : ''
+    }
 
   };
 };

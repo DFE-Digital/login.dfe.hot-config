@@ -2,6 +2,9 @@
   "name": "login.dfe.oidc.clients",
   "version": "0.0.1",
   "description": "API to return list of clients for OIDC server",
+  "engines": {
+    "node": "8.x.x"
+  },
   "dependencies": {
     "body-parser": "^1.18.1",
     "express": "^4.15.4",

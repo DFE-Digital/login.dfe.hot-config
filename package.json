@@ -35,7 +35,7 @@
     "test": "./generate-certs.sh; ./node_modules/.bin/mocha --reporter spec",
     "setup": "./generate-certs.sh",
     "dev": "PORT=4432 NODE_ENV=dev JWT_SECRET=somesecret AUTH_TYPE=secret node src/index.js",
-    "heroku": "PORT=$PORT NODE_ENV=$NODE_ENV AUTH_TYPE=$AUTH_TYPE JWT_SECRET=$JWT_SECRET REDIS_CONNECTION=$REDIS_URL node src/index.js"
+    "heroku": "node src/index.js"
   },
   "homepage": "https://github.com/DFE-Digital/login.dfe.oidc.clients#readme"
 }

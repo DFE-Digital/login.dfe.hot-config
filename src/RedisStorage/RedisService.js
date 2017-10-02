@@ -1,13 +1,14 @@
 'use strict'
 
 const redis = require('ioredis');
+const config = require('./../config');
 let client;
 
 class ClientStorage {
 
   constructor(redisClient){
     if(redisClient === null || redisClient === undefined){
-      client = new redis(process.env.REDIS_CONNECTION);
+      client = new redis(config.redis.url);
     } else{
       client = redisClient;
     }

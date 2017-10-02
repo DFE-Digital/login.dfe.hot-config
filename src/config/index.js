@@ -28,7 +28,7 @@ const renderConfig = () => {
     },
     auth: getAuthConfig(),
     redis: {
-      url: process.env.REDIS_CONNECTION ? process.env.REDIS_CONNECTION : ''
+      url: process.env.REDIS_URL ? process.env.REDIS_URL : ''
     }
 
   };

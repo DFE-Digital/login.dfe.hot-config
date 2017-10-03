@@ -11,6 +11,7 @@
     "fs": "0.0.1-security",
     "ioredis": "^3.1.4",
     "jsonwebtoken": "^8.0.1",
+    "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#master",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-azure-ad": "^3.0.8",
@@ -37,9 +38,9 @@
     "url": "https://github.com/DFE-Digital/login.dfe.oidc.clients/issues"
   },
   "scripts": {
-    "test": "./generate-certs.sh; ./node_modules/.bin/mocha --reporter spec",
+    "test": "./generate-certs.sh; ./node_modules/mocha/bin/mocha --reporter spec",
     "setup": "./generate-certs.sh",
-    "dev": "PORT=4432 NODE_ENV=dev JWT_SECRET=somesecret AUTH_TYPE=secret node src/index.js",
+    "dev": "settings=./config/login.dfe.hot-config.dev.json PORT=4432 NODE_ENV=dev JWT_SECRET=somesecret AUTH_TYPE=secret node src/index.js",
     "heroku": "node src/index.js"
   },
   "homepage": "https://github.com/DFE-Digital/login.dfe.oidc.clients#readme"

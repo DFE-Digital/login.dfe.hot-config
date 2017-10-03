@@ -1,37 +1,48 @@
-const renderConfig = () => {
-  const isDev = process.env.NODE_ENV === 'dev';
+'use strict';
 
-  const authTypes = [
-    {
-      type: 'secret',
-      secret: process.env.JWT_SECRET
-    },
-    {
-      type: 'aad',
-      identityMetadata: process.env.IDENTITY_METADATA,
-      clientID: process.env.CLIENT_ID
-    }
-  ];
+const fs = require('fs');
+const Path = require('path');
 
-  const getAuthConfig = () => {
-    const authType = process.env.AUTH_TYPE;
-    const authConfig = authTypes.find((a) => a.type === authType);
-    return authConfig;
-  };
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'dev';
+const isDev = env === 'dev';
 
-  return {
-    hostingEnvironment: {
-      env: process.env.NODE_ENV ? process.env.NODE_ENV : 'dev',
-      host: process.env.HOST ? process.env.HOST : 'localhost',
-      port: process.env.PORT ? process.env.PORT : 4432,
-      protocol: isDev ? 'https' : 'http'
-    },
-    auth: getAuthConfig(),
-    redis: {
-      url: process.env.REDIS_URL ? process.env.REDIS_URL : ''
-    }
-
-  };
+const getSettingsObject = (settings) => {
+  try {
+    return JSON.parse(settings);
+  } catch (e) {
+    return null;
+  }
 };
 
-module.exports = renderConfig();
+const getSettingsFromFile = (settingsPath) => {
+  if (fs.existsSync(settingsPath)) {
+    const file = fs.readFileSync(settingsPath, 'utf8');
+    try {
+      return JSON.parse(file);
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
+};
+
+const fetchConfig = () => {
+  if (process.env.settings) {
+    const settings = process.env.settings;
+    let settingsObject = getSettingsObject(settings);
+    if (settingsObject !== null) {
+      return settingsObject;
+    }
+    const settingsPath = Path.resolve(settings);
+    if (fs.existsSync(settingsPath)) {
+      settingsObject = getSettingsFromFile(settingsPath);
+      if (settingsObject !== null) {
+        return settingsObject;
+      }
+    }
+  }
+
+  return null;
+};
+
+module.exports = fetchConfig();

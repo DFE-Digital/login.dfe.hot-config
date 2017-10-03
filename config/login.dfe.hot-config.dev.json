@@ -1,4 +1,16 @@
 {
+  "loggerSettings": {
+    "levels": {
+      "info": 0,
+      "ok": 1,
+      "error": 2
+    },
+    "colors": {
+      "info": "yellow",
+      "ok": "green",
+      "error": "red"
+    }
+  },
   "hostingEnvironment": {
     "env": "dev",
     "host": "localhost",

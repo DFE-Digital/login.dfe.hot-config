@@ -13,7 +13,7 @@ class ClientStorage {
     }
   }
 
-  async Close() {
+  async close() {
     try{
       client.disconnect();
     }catch(e){

@@ -5,12 +5,19 @@ const config = require('./../config');
 let client;
 
 class ClientStorage {
-
   constructor(redisClient){
     if(redisClient === null || redisClient === undefined){
       client = new redis(config.redis.url);
     } else{
       client = redisClient;
+    }
+  }
+
+  async Close() {
+    try{
+      client.disconnect();
+    }catch(e){
+      console.log(e)
     }
   }
 

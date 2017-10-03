@@ -9,10 +9,11 @@ const router = express.Router();
 
 module.exports = () => {
   router.get('/', function (req, res) {
-    var redisStorage = new RedisStorage();
+    let redisStorage = new RedisStorage();
 
     redisStorage.GetSAMLClients().then((clients) => {
       res.send(clients);
+      redisStorage.close();
     });
   });
 

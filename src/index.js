@@ -9,7 +9,7 @@ const winston = require('winston');
 const oidcClients = require('./OIDCClients');
 const samlClients = require('./SAMLClients');
 const config = require('./config');
-const auth = require('./Authorization');
+const auth = require('login.dfe.api.auth');
 
 console.log(JSON.stringify(config));
 

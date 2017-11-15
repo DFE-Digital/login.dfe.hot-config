@@ -11,7 +11,7 @@
     "fs": "0.0.1-security",
     "ioredis": "^3.1.4",
     "jsonwebtoken": "^8.0.1",
-    "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#master",
+    "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#v1.0.0",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-azure-ad": "^3.0.8",

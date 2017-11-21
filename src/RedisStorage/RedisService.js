@@ -1,14 +1,15 @@
 'use strict';
 
-const redis = require('ioredis');
+const Redis = require('ioredis');
 const config = require('../infrastructure/config');
+const logger = require('./../infrastructure/logger');
 
 let client;
 
 class ClientStorage {
   constructor(redisClient) {
     if (redisClient === null || redisClient === undefined) {
-      client = new redis(config.redis.url);
+      client = new Redis(config.redis.url);
     } else {
       client = redisClient;
     }
@@ -18,7 +19,7 @@ class ClientStorage {
     try {
       client.disconnect();
     } catch (e) {
-      console.log(e);
+      logger.error(e);
     }
   }
 

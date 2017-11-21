@@ -1,14 +1,17 @@
 {
   "loggerSettings": {
-    "levels": {
-      "info": 0,
-      "ok": 1,
-      "error": 2
+    "redis": {
+      "enabled": false,
+      "host": "127.0.0.1",
+      "port": 6379,
+      "auth": null
     },
+    "logLevel": "info",
     "colors": {
       "info": "yellow",
       "ok": "green",
-      "error": "red"
+      "error": "red",
+      "audit": "magenta"
     }
   },
   "hostingEnvironment": {

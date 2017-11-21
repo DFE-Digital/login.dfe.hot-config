@@ -7,9 +7,8 @@ const router = express.Router();
 
 
 const routeExport = () => {
-
-  router.get('/', function (req, res) {
-    let redisStorage = new RedisStorage();
+  router.get('/', (req, res) => {
+    const redisStorage = new RedisStorage();
 
     redisStorage.GetOIDCClients().then((clients) => {
       res.send(clients);

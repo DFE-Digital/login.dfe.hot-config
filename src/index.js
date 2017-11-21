@@ -1,17 +1,15 @@
 'use strict';
 
 const express = require('express');
-const bodyParser  = require('body-parser');
-const fs  = require('fs');
+const bodyParser = require('body-parser');
+const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
 
 const oidcClients = require('./OIDCClients');
 const samlClients = require('./SAMLClients');
-const config = require('./config');
+const config = require('./infrastructure/config');
 const auth = require('login.dfe.api.auth');
-
-console.log(JSON.stringify(config));
 
 const app = express();
 const logger = new (winston.Logger)({

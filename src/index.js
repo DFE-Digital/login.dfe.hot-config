@@ -1,17 +1,15 @@
 'use strict';
 
 const express = require('express');
-const bodyParser  = require('body-parser');
-const fs  = require('fs');
+const bodyParser = require('body-parser');
+const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
 
-const oidcClients = require('./OIDCClients');
-const samlClients = require('./SAMLClients');
-const config = require('./config');
+const oidcClients = require('./app/OIDCClients');
+const samlClients = require('./app/SAMLClients');
+const config = require('./infrastructure/config');
 const auth = require('login.dfe.api.auth');
-
-console.log(JSON.stringify(config));
 
 const app = express();
 const logger = new (winston.Logger)({
@@ -31,13 +29,13 @@ app.use(auth(app, config));
 
 app.set('secret', config.secret);
 
-app.use('/oidcclients',oidcClients());
-app.use('/samlclients',samlClients());
+app.use('/oidcclients', oidcClients());
+app.use('/samlclients', samlClients());
 
 // Corrs
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 

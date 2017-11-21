@@ -1,5 +1,3 @@
-const expect = require('chai').expect;
-const sinon = require('sinon');
 const RedisMock = require('ioredis-mock').default;
 
 const RedisStorage = require('../../../src/RedisStorage/RedisService');
@@ -7,35 +5,32 @@ const clients = '[{"client_id": "foo", "client_secret": "bar", "redirect_uris": 
 
 describe('When getting oidc clients', () => {
   let redis;
-  let sandbox;
   let redisStorage;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
     redis = new RedisMock();
     redisStorage = new RedisStorage(redis);
   });
   afterEach(() => {
-    sandbox.restore();
   });
   it('then the clients are retrieved from redis', () => {
     redis.set('OIDCClients', '[{}]');
 
     return redisStorage.GetOIDCClients().then((actual) => {
-      expect(actual).to.not.equal(undefined);
-      expect(JSON.stringify(actual)).to.equal('[{}]');
+      expect(actual).not.toBe(undefined);
+      expect(JSON.stringify(actual)).toBe('[{}]');
     });
   });
   it('then null is returned if there is no data', () => {
     return redisStorage.GetOIDCClients().then((actual) => {
-      expect(actual).to.equal(null);
+      expect(actual).toBeNull();
     });
   });
   it('then the json is parsed and returned', () => {
     redis.set('OIDCClients', clients);
     return redisStorage.GetOIDCClients().then((actual) => {
-      expect(actual).to.not.equal(null);
-      expect(actual[0].client_id).to.equal('foo');
+      expect(actual).not.toBeNull();
+      expect(actual[0].client_id).toBe('foo');
     });
   });
 });

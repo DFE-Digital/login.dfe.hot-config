@@ -39,7 +39,7 @@
     "url": "https://github.com/DFE-Digital/login.dfe.oidc.clients/issues"
   },
   "scripts": {
-    "test": "./generate-certs.sh; ./node_modules/.bin/jest",
+    "test": "./node_modules/.bin/jest",
     "setup": "./generate-certs.sh",
     "dev": "settings=./config/login.dfe.hot-config.dev.json src/index.js",
     "heroku": "node src/index.js"

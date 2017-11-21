@@ -1,6 +1,6 @@
 const RedisMock = require('ioredis-mock').default;
 
-const RedisStorage = require('../../../src/RedisStorage/RedisService');
+const RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
 const clients = '[{"client_id": "foo", "client_secret": "bar", "redirect_uris": ["http://lvh.me/cb"]}]';
 
 describe('When getting oidc clients', () => {

@@ -6,8 +6,8 @@ const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
 
-const oidcClients = require('./OIDCClients');
-const samlClients = require('./SAMLClients');
+const oidcClients = require('./app/OIDCClients');
+const samlClients = require('./app/SAMLClients');
 const config = require('./infrastructure/config');
 const auth = require('login.dfe.api.auth');
 
@@ -29,13 +29,13 @@ app.use(auth(app, config));
 
 app.set('secret', config.secret);
 
-app.use('/oidcclients',oidcClients());
-app.use('/samlclients',samlClients());
+app.use('/oidcclients', oidcClients());
+app.use('/samlclients', samlClients());
 
 // Corrs
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 

@@ -1,6 +1,6 @@
 const RedisMock = require('ioredis-mock').default;
 
-const RedisStorage = require('../../../src/RedisStorage/RedisService');
+const RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
 const clients = '[{"id":"foo","identifierUri":"https://unit.test/foo","returnUrls":["https://relying.party/"],"publicKeyId":"fookey"}]';
 
 describe('When getting saml clients', () => {

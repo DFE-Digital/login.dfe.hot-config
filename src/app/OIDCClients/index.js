@@ -1,8 +1,7 @@
 'use strict';
 
 const express = require('express');
-const RedisStorage = require('./../RedisStorage/RedisService');
-
+const RedisStorage = require('./../../infrastructure/RedisStorage/RedisService');
 const router = express.Router();
 
 

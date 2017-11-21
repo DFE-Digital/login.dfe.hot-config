@@ -1,8 +1,8 @@
 'use strict';
 
 const Redis = require('ioredis');
-const config = require('../infrastructure/config');
-const logger = require('./../infrastructure/logger');
+const config = require('./../config/index');
+const logger = require('./../logger/index');
 
 let client;
 

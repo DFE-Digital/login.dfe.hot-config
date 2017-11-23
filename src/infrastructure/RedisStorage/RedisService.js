@@ -1,53 +1,30 @@
 'use strict';
 
 const Redis = require('ioredis');
-const config = require('./../config/index');
-const logger = require('./../logger/index');
+const config = require('./../config');
 
-let client;
+const client = new Redis(config.redis.url);
 
-class ClientStorage {
-  constructor(redisClient) {
-    if (redisClient === null || redisClient === undefined) {
-      client = new Redis(config.redis.url);
-    } else {
-      client = redisClient;
-    }
+const getOIDCClients = async () => {
+  const result = await client.get('OIDCClients');
+
+  if (!result) {
+    return null;
   }
 
-  async close() {
-    try {
-      client.disconnect();
-    } catch (e) {
-      logger.error(e);
-    }
+  return JSON.parse(result);
+};
+
+const getSAMLClients = async () => {
+  const result = await client.get('SAMLClients');
+  if (!result) {
+    return null;
   }
+  return JSON.parse(result);
+};
 
-  async GetOIDCClients() {
-    return new Promise((resolve, reject) => {
-      client.get('OIDCClients').then((result) => {
-        if (result === null || result === undefined) {
-          resolve(null);
-        }
-        const parsedClients = JSON.parse(result);
 
-        resolve(parsedClients);
-      });
-    });
-  }
-
-  async GetSAMLClients() {
-    return new Promise((resolve, reject) => {
-      client.get('SAMLClients').then((result) => {
-        if (result === null || result === undefined) {
-          resolve(null);
-        }
-        const parsedClients = JSON.parse(result);
-
-        resolve(parsedClients);
-      });
-    });
-  }
-}
-
-module.exports = ClientStorage;
+module.exports = {
+  getOIDCClients,
+  getSAMLClients,
+};

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
+const https = require('https');
 
 const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');
@@ -42,7 +43,6 @@ app.use((req, res, next) => {
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
 
-  const https = require('https');
   const options = {
     key: fs.readFileSync('./ssl/localhost.key'),
     cert: fs.readFileSync('./ssl/localhost.cert'),

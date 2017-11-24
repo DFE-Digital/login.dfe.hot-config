@@ -1,36 +1,70 @@
-const RedisMock = require('ioredis-mock').default;
+jest.mock('./../../../src/infrastructure/config', () => {
+  return {
+    redis: {
+        url: 'http://orgs.api.test',
+    },
+  };
+});
 
-const RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
-const clients = '[{"client_id": "foo", "client_secret": "bar", "redirect_uris": ["http://lvh.me/cb"]}]';
+jest.mock('ioredis', () => {
+  return jest.fn().mockImplementation(() => {
+
+  });
+});
+
+
 
 describe('When getting oidc clients', () => {
-  let redis;
-  let redisStorage;
+  let RedisStorage;
 
   beforeEach(() => {
-    redis = new RedisMock();
-    redisStorage = new RedisStorage(redis);
-  });
-  afterEach(() => {
-  });
-  it('then the clients are retrieved from redis', () => {
-    redis.set('OIDCClients', '[{}]');
+    jest.resetModules();
 
-    return redisStorage.GetOIDCClients().then((actual) => {
-      expect(actual).not.toBe(undefined);
-      expect(JSON.stringify(actual)).toBe('[{}]');
-    });
   });
-  it('then null is returned if there is no data', () => {
-    return redisStorage.GetOIDCClients().then((actual) => {
-      expect(actual).toBeNull();
+  it('then the clients are retrieved from redis', async () => {
+    jest.doMock('ioredis', () => {
+      return jest.fn().mockImplementation(() => {
+        const RedisMock = require('ioredis-mock').default;
+        const redisMock = new RedisMock();
+        redisMock.set('OIDCClients', '[{}]');
+        return redisMock;
+      });
     });
+    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    const actual  = await RedisStorage.getOIDCClients();
+
+    expect(actual).not.toBe(undefined);
+    expect(JSON.stringify(actual)).toBe('[{}]');
+
   });
-  it('then the json is parsed and returned', () => {
-    redis.set('OIDCClients', clients);
-    return redisStorage.GetOIDCClients().then((actual) => {
-      expect(actual).not.toBeNull();
-      expect(actual[0].client_id).toBe('foo');
+  it('then null is returned if there is no data', async () => {
+    jest.doMock('ioredis', () => {
+      return jest.fn().mockImplementation(() => {
+        const RedisMock = require('ioredis-mock').default;
+        const redisMock = new RedisMock();
+        redisMock.set('OIDCClients', '');
+        return redisMock;
+      });
     });
+    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    const actual = await RedisStorage.getOIDCClients();
+
+    expect(actual).toBeNull();
+  });
+  it('then the json is parsed and returned', async () => {
+    jest.doMock('ioredis', () => {
+      return jest.fn().mockImplementation(() => {
+        const RedisMock = require('ioredis-mock').default;
+        const redisMock = new RedisMock();
+        redisMock.set('OIDCClients', '[{"client_id": "foo", "client_secret": "bar", "redirect_uris": ["http://lvh.me/cb"]}]');
+        return redisMock;
+      });
+    });
+
+    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    const actual = await RedisStorage.getOIDCClients();
+
+    expect(actual).not.toBeNull();
+    expect(actual[0].client_id).toBe('foo');
   });
 });

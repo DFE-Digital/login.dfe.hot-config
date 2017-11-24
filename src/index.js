@@ -12,13 +12,17 @@ const samlClients = require('./app/SAMLClients');
 const config = require('./infrastructure/config');
 const auth = require('login.dfe.api.auth');
 
-const app = express();
 const logger = new (winston.Logger)({
   colors: config.loggerSettings.colors,
   transports: [
     new (winston.transports.Console)({ level: 'info', colorize: true }),
   ],
 });
+
+const { hotConfigSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
+validateConfigAndQuitOnError(hotConfigSchema, config, logger);
+
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

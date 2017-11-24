@@ -4,7 +4,7 @@
       "enabled": false,
       "host": "127.0.0.1",
       "port": 6379,
-      "auth": null
+      "auth": ""
     },
     "logLevel": "info",
     "colors": {
@@ -26,6 +26,6 @@
     "clientID": "f5f9ce9f-aef8-4993-a3d3-7c90142addb7"
   },
   "redis": {
-    "url": ""
+    "url": "redis://localhost:6379"
   }
 }

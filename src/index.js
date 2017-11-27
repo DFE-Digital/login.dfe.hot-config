@@ -20,6 +20,7 @@ const logger = new (winston.Logger)({
 });
 
 const { hotConfigSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
+
 validateConfigAndQuitOnError(hotConfigSchema, config, logger);
 
 const app = express();

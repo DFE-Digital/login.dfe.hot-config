@@ -11,6 +11,7 @@ const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');
 const config = require('./infrastructure/config');
 const auth = require('login.dfe.api.auth');
+const appInsights = require('applicationinsights');
 
 const logger = new (winston.Logger)({
   colors: config.loggerSettings.colors,
@@ -23,6 +24,9 @@ const { hotConfigSchema, validateConfigAndQuitOnError } = require('login.dfe.con
 
 validateConfigAndQuitOnError(hotConfigSchema, config, logger);
 
+if (config.hostingEnvironment.applicationInsights) {
+  appInsights.setup(config.hostingEnvironment.applicationInsights).start();
+}
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));

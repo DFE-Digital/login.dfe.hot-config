@@ -7,7 +7,7 @@ const router = express.Router();
 
 module.exports = () => {
   router.get('/', (req, res) => {
-    RedisStorage.getSAMLClients().then((clients) => {
+    RedisStorage.getSAMLClients(req.header('x-correlation-id')).then((clients) => {
       res.send(clients);
     });
   });

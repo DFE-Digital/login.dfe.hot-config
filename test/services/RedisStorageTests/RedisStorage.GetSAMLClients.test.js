@@ -11,14 +11,18 @@ jest.mock('ioredis', () => {
 
   });
 });
+jest.mock('./../../../src/infrastructure/logger');
+
 const clients = '[{"id":"foo","identifierUri":"https://unit.test/foo","returnUrls":["https://relying.party/"],"publicKeyId":"fookey"}]';
 
 describe('When getting saml clients', () => {
   let RedisStorage;
+  let logger;
 
   beforeEach(() => {
     jest.resetModules();
-
+    logger = require('./../../../src/infrastructure/logger');
+    logger.info = jest.fn().mockImplementation(() => {});
   });
   it('then the clients are retrieved from redis', async () => {
     jest.doMock('ioredis', () => {
@@ -72,5 +76,21 @@ describe('When getting saml clients', () => {
     expect(actual[0].returnUrls[0]).toBe('https://relying.party/');
     expect(actual[0].publicKeyId).toBe('fookey');
 
+  });
+  it('then the logger records the correlationId', async () => {
+    jest.doMock('ioredis', () => {
+      return jest.fn().mockImplementation(() => {
+        const RedisMock = require('ioredis-mock').default;
+        const redisMock = new RedisMock();
+        redisMock.set('SAMLClients', clients);
+        return redisMock;
+      });
+    });
+
+    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    await RedisStorage.getSAMLClients('12345');
+
+    expect(logger.info.mock.calls).toHaveLength(1);
+    expect(logger.info.mock.calls[0][0]).toBe('Getting SAMLClients for request id 12345');
   });
 });

@@ -8,7 +8,7 @@ const router = express.Router();
 
 const routeExport = () => {
   router.get('/', (req, res) => {
-    RedisStorage.getOIDCClients().then((clients) => {
+    RedisStorage.getOIDCClients(req.header('x-correlation-id')).then((clients) => {
       res.send(clients);
     });
   });

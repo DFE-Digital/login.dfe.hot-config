@@ -2,10 +2,12 @@
 
 const Redis = require('ioredis');
 const config = require('./../config');
+const logger = require('./../logger');
 
 const client = new Redis(config.redis.url);
 
-const getOIDCClients = async () => {
+const getOIDCClients = async (correlationId) => {
+  logger.info(`Getting OIDCClients for request id ${correlationId}`);
   const result = await client.get('OIDCClients');
 
   if (!result) {
@@ -15,7 +17,10 @@ const getOIDCClients = async () => {
   return JSON.parse(result);
 };
 
-const getSAMLClients = async () => {
+const getSAMLClients = async (correlationId) => {
+
+  logger.info(`Getting SAMLClients for request id ${correlationId}`);
+
   const result = await client.get('SAMLClients');
   if (!result) {
     return null;

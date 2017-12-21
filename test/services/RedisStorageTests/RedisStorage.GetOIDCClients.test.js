@@ -7,13 +7,17 @@ jest.mock('./../../../src/infrastructure/config', () => ({
 jest.mock('ioredis', () => jest.fn().mockImplementation(() => {
 
 }));
-
+jest.mock('./../../../src/infrastructure/logger');
 
 describe('When getting oidc clients', () => {
   let RedisStorage;
+  let logger;
+
 
   beforeEach(() => {
     jest.resetModules();
+    logger = require('./../../../src/infrastructure/logger');
+    logger.info = jest.fn().mockImplementation(() => {});
   });
   it('then the clients are retrieved from redis', async () => {
     jest.doMock('ioredis', () => jest.fn().mockImplementation(() => {
@@ -53,5 +57,19 @@ describe('When getting oidc clients', () => {
 
     expect(actual).not.toBeNull();
     expect(actual[0].client_id).toBe('foo');
+  });
+  it('then the logger records the correlationId', async () => {
+    jest.doMock('ioredis', () => jest.fn().mockImplementation(() => {
+      const RedisMock = require('ioredis-mock').default;
+      const redisMock = new RedisMock();
+      redisMock.set('OIDCClients', '[{"client_id": "foo", "client_secret": "bar", "redirect_uris": ["http://lvh.me/cb"]}]');
+      return redisMock;
+    }));
+
+    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    await RedisStorage.getOIDCClients('12345');
+
+    expect(logger.info.mock.calls).toHaveLength(1);
+    expect(logger.info.mock.calls[0][0]).toBe('Getting OIDCClients for request id 12345');
   });
 });

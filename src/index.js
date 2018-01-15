@@ -1,17 +1,16 @@
 'use strict';
 
+const config = require('./infrastructure/config');
+const appInsights = require('applicationinsights');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const morgan = require('morgan');
 const winston = require('winston');
 const https = require('https');
-
 const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');
-const config = require('./infrastructure/config');
 const auth = require('login.dfe.api.auth');
-const appInsights = require('applicationinsights');
 
 const logger = new (winston.Logger)({
   colors: config.loggerSettings.colors,

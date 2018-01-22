@@ -1,13 +1,13 @@
 'use strict';
 
 const express = require('express');
-const RedisStorage = require('./../../infrastructure/RedisStorage/RedisService');
+const storage = require('../../infrastructure/storage');
 
 const router = express.Router();
 
 module.exports = () => {
   router.get('/', (req, res) => {
-    RedisStorage.getSAMLClients(req.header('x-correlation-id')).then((clients) => {
+    storage.getSAMLClients(req.header('x-correlation-id')).then((clients) => {
       res.send(clients);
     });
   });

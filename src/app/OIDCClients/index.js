@@ -1,14 +1,14 @@
 'use strict';
 
 const express = require('express');
-const RedisStorage = require('./../../infrastructure/RedisStorage/RedisService');
+const storage = require('../../infrastructure/storage');
 
 const router = express.Router();
 
 
 const routeExport = () => {
   router.get('/', (req, res) => {
-    RedisStorage.getOIDCClients(req.header('x-correlation-id')).then((clients) => {
+    storage.getOIDCClients(req.header('x-correlation-id')).then((clients) => {
       res.send(clients);
     });
   });

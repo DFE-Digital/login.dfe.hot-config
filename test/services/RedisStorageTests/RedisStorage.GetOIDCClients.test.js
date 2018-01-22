@@ -1,6 +1,8 @@
 jest.mock('./../../../src/infrastructure/config', () => ({
-  redis: {
-    url: 'http://orgs.api.test',
+  storage: {
+    params: {
+      url: 'http://orgs.api.test',
+    },
   },
 }));
 
@@ -17,7 +19,8 @@ describe('When getting oidc clients', () => {
   beforeEach(() => {
     jest.resetModules();
     logger = require('./../../../src/infrastructure/logger');
-    logger.info = jest.fn().mockImplementation(() => {});
+    logger.info = jest.fn().mockImplementation(() => {
+    });
   });
   it('then the clients are retrieved from redis', async () => {
     jest.doMock('ioredis', () => jest.fn().mockImplementation(() => {
@@ -26,7 +29,7 @@ describe('When getting oidc clients', () => {
       redisMock.set('OIDCClients', '[{}]');
       return redisMock;
     }));
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
     const actual = await RedisStorage.getOIDCClients();
 
     expect(actual).not.toBe(undefined);
@@ -39,7 +42,7 @@ describe('When getting oidc clients', () => {
       redisMock.set('OIDCClients', '');
       return redisMock;
     }));
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
     const actual = await RedisStorage.getOIDCClients();
 
     expect(actual).toBeNull();
@@ -52,7 +55,7 @@ describe('When getting oidc clients', () => {
       return redisMock;
     }));
 
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
     const actual = await RedisStorage.getOIDCClients();
 
     expect(actual).not.toBeNull();
@@ -66,7 +69,7 @@ describe('When getting oidc clients', () => {
       return redisMock;
     }));
 
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
     await RedisStorage.getOIDCClients('12345');
 
     expect(logger.info.mock.calls).toHaveLength(1);

@@ -1,7 +1,9 @@
 jest.mock('./../../../src/infrastructure/config', () => {
   return {
-    redis: {
-      url: 'http://orgs.api.test',
+    storage: {
+      params: {
+        url: 'http://orgs.api.test',
+      },
     },
   };
 });
@@ -22,7 +24,8 @@ describe('When getting saml clients', () => {
   beforeEach(() => {
     jest.resetModules();
     logger = require('./../../../src/infrastructure/logger');
-    logger.info = jest.fn().mockImplementation(() => {});
+    logger.info = jest.fn().mockImplementation(() => {
+    });
   });
   it('then the clients are retrieved from redis', async () => {
     jest.doMock('ioredis', () => {
@@ -33,7 +36,7 @@ describe('When getting saml clients', () => {
         return redisMock;
       });
     });
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
 
 
     const actual = await RedisStorage.getSAMLClients();
@@ -50,7 +53,7 @@ describe('When getting saml clients', () => {
         return redisMock;
       });
     });
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
 
     const actual = await RedisStorage.getSAMLClients();
 
@@ -65,7 +68,7 @@ describe('When getting saml clients', () => {
         return redisMock;
       });
     });
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
 
     const actual = await RedisStorage.getSAMLClients();
 
@@ -87,7 +90,7 @@ describe('When getting saml clients', () => {
       });
     });
 
-    RedisStorage = require('./../../../src/infrastructure/RedisStorage/RedisService');
+    RedisStorage = require('../../../src/infrastructure/storage/redis');
     await RedisStorage.getSAMLClients('12345');
 
     expect(logger.info.mock.calls).toHaveLength(1);

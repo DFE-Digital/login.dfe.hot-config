@@ -25,7 +25,10 @@
     "identityMetadata": "https://login.microsoftonline.com/27cc275f-b524-460e-b51c-c5532d1cc54f/.well-known/openid-configuration",
     "clientID": "f5f9ce9f-aef8-4993-a3d3-7c90142addb7"
   },
-  "redis": {
-    "url": "redis://localhost:6379"
+  "storage": {
+    "type": "redis",
+    "params": {
+      "url": "redis://localhost:6379"
+    }
   }
 }

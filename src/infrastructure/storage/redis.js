@@ -4,7 +4,7 @@ const Redis = require('ioredis');
 const config = require('./../config');
 const logger = require('./../logger');
 
-const client = new Redis(config.redis.url);
+const client = new Redis(config.storage.params.url);
 
 const getOIDCClients = async (correlationId) => {
   logger.info(`Getting OIDCClients for request id ${correlationId}`, {correlationId});

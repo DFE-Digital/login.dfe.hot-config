@@ -13,7 +13,7 @@
     "ioredis": "^3.1.4",
     "jsonwebtoken": "^8.0.1",
     "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#v1.0.0",
-    "login.dfe.config.schema": "git+https://github.com/DFE-Digital/login.dfe.config.schema.git#v2.3",
+    "login.dfe.config.schema": "git+https://github.com/DFE-Digital/login.dfe.config.schema.git#v3.1",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-azure-ad": "^3.0.8",

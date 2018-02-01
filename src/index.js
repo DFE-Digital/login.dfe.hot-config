@@ -11,6 +11,7 @@ const https = require('https');
 const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');
 const auth = require('login.dfe.api.auth');
+const healthCheck = require('login.dfe.healthcheck');
 
 const logger = new (winston.Logger)({
   colors: config.loggerSettings.colors,
@@ -34,9 +35,12 @@ app.set('logger', logger);
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
 app.use(morgan('dev'));
 
-app.use(auth(app, config));
-
 app.set('secret', config.secret);
+
+app.use('/healthcheck', healthCheck({ config }));
+
+
+app.use(auth(app, config));
 
 app.use('/oidcclients', oidcClients());
 app.use('/samlclients', samlClients());

@@ -8,6 +8,9 @@
         "appServiceName": {
             "value": ""
         },
+        "appServicePlanRG": {
+            "value": ""
+        },
         "appServiceConfigPath": {
             "value": ""
         }

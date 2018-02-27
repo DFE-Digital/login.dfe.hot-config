@@ -1,32 +1,21 @@
 'use strict';
 
 const config = require('./infrastructure/config');
-const appInsights = require('applicationinsights');
+const logger = require('./infrastructure/logger');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const morgan = require('morgan');
-const winston = require('winston');
 const https = require('https');
 const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');
 const auth = require('login.dfe.api.auth');
 const healthCheck = require('login.dfe.healthcheck');
 
-const logger = new (winston.Logger)({
-  colors: config.loggerSettings.colors,
-  transports: [
-    new (winston.transports.Console)({ level: 'info', colorize: true }),
-  ],
-});
-
 const { hotConfigSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
 validateConfigAndQuitOnError(hotConfigSchema, config, logger);
 
-if (config.hostingEnvironment.applicationInsights) {
-  appInsights.setup(config.hostingEnvironment.applicationInsights).start();
-}
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -13,7 +13,11 @@ jest.mock('ioredis', () => {
 
   });
 });
-jest.mock('./../../../src/infrastructure/logger');
+jest.mock('./../../../src/infrastructure/logger', () => {
+  return {
+    info: jest.fn(),
+  };
+});
 
 const clients = '[{"id":"foo","identifierUri":"https://unit.test/foo","returnUrls":["https://relying.party/"],"publicKeyId":"fookey"}]';
 

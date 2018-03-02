@@ -11,6 +11,7 @@ const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');
 const auth = require('login.dfe.api.auth');
 const healthCheck = require('login.dfe.healthcheck');
+const { getErrorHandler } = require('login.dfe.express-error-handling');
 
 const { hotConfigSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
@@ -40,6 +41,11 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
+// Error handling
+app.use(getErrorHandler({
+  logger,
+}));
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;

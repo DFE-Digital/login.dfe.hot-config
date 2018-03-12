@@ -12,10 +12,24 @@ const samlClients = require('./app/SAMLClients');
 const auth = require('login.dfe.api.auth');
 const healthCheck = require('login.dfe.healthcheck');
 const { getErrorHandler } = require('login.dfe.express-error-handling');
+const KeepAliveAgent = require('agentkeepalive');
 
 const { hotConfigSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
 validateConfigAndQuitOnError(hotConfigSchema, config, logger);
+
+http.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 10,
+  maxFreeSockets: 2,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
+https.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 10,
+  maxFreeSockets: 2,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
 
 const app = express();
 

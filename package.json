@@ -6,6 +6,7 @@
     "node": "8.x.x"
   },
   "dependencies": {
+    "agentkeepalive": "^3.4.1",
     "applicationinsights": "^1.0.1",
     "body-parser": "^1.18.1",
     "express": "^4.15.4",

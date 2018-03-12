@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const morgan = require('morgan');
+const http = require('http');
 const https = require('https');
 const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');

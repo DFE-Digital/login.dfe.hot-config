@@ -1,32 +1,37 @@
 'use strict';
 
 const config = require('./infrastructure/config');
-const appInsights = require('applicationinsights');
+const logger = require('./infrastructure/logger');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const morgan = require('morgan');
-const winston = require('winston');
+const http = require('http');
 const https = require('https');
 const oidcClients = require('./app/OIDCClients');
 const samlClients = require('./app/SAMLClients');
 const auth = require('login.dfe.api.auth');
 const healthCheck = require('login.dfe.healthcheck');
-
-const logger = new (winston.Logger)({
-  colors: config.loggerSettings.colors,
-  transports: [
-    new (winston.transports.Console)({ level: 'info', colorize: true }),
-  ],
-});
+const { getErrorHandler } = require('login.dfe.express-error-handling');
+const KeepAliveAgent = require('agentkeepalive');
 
 const { hotConfigSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
 validateConfigAndQuitOnError(hotConfigSchema, config, logger);
 
-if (config.hostingEnvironment.applicationInsights) {
-  appInsights.setup(config.hostingEnvironment.applicationInsights).start();
-}
+http.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 160,
+  maxFreeSockets: 10,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
+https.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 160,
+  maxFreeSockets: 10,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,6 +56,11 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
+// Error handling
+app.use(getErrorHandler({
+  logger,
+}));
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;

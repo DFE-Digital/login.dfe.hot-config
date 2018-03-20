@@ -6,6 +6,7 @@
     "node": "8.x.x"
   },
   "dependencies": {
+    "agentkeepalive": "^3.4.1",
     "applicationinsights": "^1.0.1",
     "body-parser": "^1.18.1",
     "express": "^4.15.4",
@@ -14,6 +15,7 @@
     "jsonwebtoken": "^8.0.1",
     "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#v1.0.0",
     "login.dfe.config.schema": "git+https://github.com/DFE-Digital/login.dfe.config.schema.git#v3.1",
+    "login.dfe.express-error-handling": "git+https://github.com/DFE-Digital/login.dfe.express-error-handling.git#v1.2",
     "login.dfe.healthcheck": "git+https://github.com/DFE-Digital/login.dfe.healthcheck.git#v1.3",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
@@ -22,6 +24,7 @@
     "redis": "^2.8.0",
     "request-promise": "^4.2.2",
     "winston": "^2.4.0",
+    "winston-azure-application-insights": "^1.1.1",
     "winston-redis": "^1.0.0"
   },
   "devDependencies": {

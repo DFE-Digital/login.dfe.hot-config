@@ -9,7 +9,11 @@ jest.mock('./../../../src/infrastructure/config', () => ({
 jest.mock('ioredis', () => jest.fn().mockImplementation(() => {
 
 }));
-jest.mock('./../../../src/infrastructure/logger');
+jest.mock('./../../../src/infrastructure/logger', () => {
+  return {
+    info: jest.fn(),
+  };
+});
 
 describe('When getting oidc clients', () => {
   let RedisStorage;

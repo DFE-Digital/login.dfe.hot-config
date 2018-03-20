@@ -2,7 +2,10 @@
 
 const config = require('./../config');
 const logger = require('./../logger');
-const rp = require('request-promise');
+const rp = require('request-promise').defaults({
+  forever: true,
+  keepAlive: true,
+});
 
 const getOIDCClients = async (correlationId) => {
   logger.info(`Getting OIDCClients for request id ${correlationId}`, { correlationId });

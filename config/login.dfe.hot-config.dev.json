@@ -13,7 +13,13 @@
     "env": "dev",
     "host": "localhost",
     "port": 4432,
-    "protocol": "http"
+    "protocol": "http",
+    "agentKeepAlive" : {
+      "maxSockets":160,
+      "maxFreeSockets":10,
+      "timeout":60000,
+      "keepAliveTimeout":30000
+    }
   },
   "auth": {
     "type": "aad",

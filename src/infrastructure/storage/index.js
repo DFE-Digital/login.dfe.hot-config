@@ -6,7 +6,7 @@ if (config.storage.type === 'redis') {
 } else if (config.storage.type === 'azureblob') {
   adapter = require('./azureBlob');
 } else {
-  throw new Error(`Unrecognised storage type ${config.storage.type}in config`);
+  adapter = require('./static');
 }
 
 module.exports = adapter;

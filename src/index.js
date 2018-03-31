@@ -44,8 +44,9 @@ app.set('secret', config.secret);
 
 app.use('/healthcheck', healthCheck({ config }));
 
-
-app.use(auth(app, config));
+if (config.hostingEnvironment.env !== 'dev') {
+  app.use(auth(app, config));
+}
 
 app.use('/oidcclients', oidcClients());
 app.use('/samlclients', samlClients());

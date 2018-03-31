@@ -1,18 +1,17 @@
 'use strict';
 
 const express = require('express');
-const storage = require('../../infrastructure/storage');
 const { asyncWrapper } = require('login.dfe.express-error-handling');
+
+const getAll = require('./getAll');
+const getSingle = require('./getSingle');
 
 const router = express.Router();
 
 
 const routeExport = () => {
-  router.get('/', asyncWrapper((req, res) => {
-    storage.getOIDCClients(req.header('x-correlation-id')).then((clients) => {
-      res.send(clients);
-    });
-  }));
+  router.get('/', asyncWrapper(getAll));
+  router.get('/:id', asyncWrapper(getSingle));
 
   return router;
 };

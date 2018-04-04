@@ -11,7 +11,7 @@
     "body-parser": "^1.18.1",
     "express": "^4.15.4",
     "fs": "0.0.1-security",
-    "ioredis": "^3.1.4",
+    "ioredis": "^3.2.2",
     "jsonwebtoken": "^8.0.1",
     "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#v1.0.0",
     "login.dfe.config.schema": "git+https://github.com/DFE-Digital/login.dfe.config.schema.git#v4.6",
@@ -20,9 +20,7 @@
     "login.dfe.winston-appinsights": "git+https://github.com/DFE-Digital/login.dfe.winston-appinsights.git#v1.1",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
-    "passport-azure-ad": "^3.0.8",
     "path": "^0.12.7",
-    "redis": "^2.8.0",
     "request-promise": "^4.2.2",
     "winston": "^2.4.0"
   },

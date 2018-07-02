@@ -5,7 +5,6 @@ const logger = require('./infrastructure/logger');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const morgan = require('morgan');
 const http = require('http');
 const https = require('https');
 const oidcClients = require('./app/OIDCClients');
@@ -37,8 +36,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('logger', logger);
-app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
-app.use(morgan('dev'));
 
 app.set('secret', config.secret);
 

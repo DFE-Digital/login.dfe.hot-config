@@ -16,7 +16,7 @@
     "login.dfe.api.auth": "github:DFE-Digital/login.dfe.api.auth#v1.0.0",
     "login.dfe.config.schema": "git+https://github.com/DFE-Digital/login.dfe.config.schema.git#v4.6",
     "login.dfe.express-error-handling": "git+https://github.com/DFE-Digital/login.dfe.express-error-handling.git#v1.2",
-    "login.dfe.healthcheck": "git+https://github.com/DFE-Digital/login.dfe.healthcheck.git#v1.3",
+    "login.dfe.healthcheck": "git+https://github.com/DFE-Digital/login.dfe.healthcheck.git#v1.4.2",
     "login.dfe.winston-appinsights": "git+https://github.com/DFE-Digital/login.dfe.winston-appinsights.git#v1.1",
     "passport": "^0.4.0",
     "path": "^0.12.7",
@@ -24,13 +24,13 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
-    "jest": "^21.2.1",
-    "jest-cli": "^21.2.1",
     "eslint": "^4.4.1",
     "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jest": "^21.2.0",
-    "ioredis-mock": "^2.4.0"
+    "ioredis-mock": "^3.10.1",
+    "jest": "^21.2.1",
+    "jest-cli": "^23.3.0"
   },
   "repository": {
     "type": "git",

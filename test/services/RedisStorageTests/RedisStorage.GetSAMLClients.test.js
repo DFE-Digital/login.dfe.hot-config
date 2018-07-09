@@ -34,7 +34,7 @@ describe('When getting saml clients', () => {
   it('then the clients are retrieved from redis', async () => {
     jest.doMock('ioredis', () => {
       return jest.fn().mockImplementation(() => {
-        const RedisMock = require('ioredis-mock').default;
+        const RedisMock = require('ioredis-mock');
         const redisMock = new RedisMock();
         redisMock.set('SAMLClients', '[{}]');
         return redisMock;
@@ -51,7 +51,7 @@ describe('When getting saml clients', () => {
   it('then null is returned if there is no data', async () => {
     jest.doMock('ioredis', () => {
       return jest.fn().mockImplementation(() => {
-        const RedisMock = require('ioredis-mock').default;
+        const RedisMock = require('ioredis-mock');
         const redisMock = new RedisMock();
         redisMock.set('SAMLClients', '');
         return redisMock;
@@ -66,7 +66,7 @@ describe('When getting saml clients', () => {
   it('then the json is parsed and returned', async () => {
     jest.doMock('ioredis', () => {
       return jest.fn().mockImplementation(() => {
-        const RedisMock = require('ioredis-mock').default;
+        const RedisMock = require('ioredis-mock');
         const redisMock = new RedisMock();
         redisMock.set('SAMLClients', clients);
         return redisMock;
@@ -87,7 +87,7 @@ describe('When getting saml clients', () => {
   it('then the logger records the correlationId', async () => {
     jest.doMock('ioredis', () => {
       return jest.fn().mockImplementation(() => {
-        const RedisMock = require('ioredis-mock').default;
+        const RedisMock = require('ioredis-mock');
         const redisMock = new RedisMock();
         redisMock.set('SAMLClients', clients);
         return redisMock;

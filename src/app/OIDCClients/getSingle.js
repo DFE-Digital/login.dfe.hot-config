@@ -1,8 +1,7 @@
-const { getOIDCClients } = require('../../infrastructure/storage');
+const { getByID } = require('../../infrastructure/services');
 
 const getSingle = async (req, res) => {
-  const clients = await getOIDCClients(req.header('x-correlation-id'));
-  const client = clients ? clients.find(c => c.client_id.toLowerCase() === req.params.id.toLowerCase()) : undefined;
+  const client = await getByID(req.params.id);
   if (!client) {
     return res.status(404).send();
   }

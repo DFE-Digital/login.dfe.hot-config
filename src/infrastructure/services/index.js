@@ -6,7 +6,7 @@ if (config.applications.type.toLowerCase() === 'api') {
 } else if (config.applications.type.toLowerCase() === 'static') {
   adapter = require('./static');
 } else {
-  throw new Error(`Invalid hot config type ${config.applications.type}`);
+  throw new Error(`Invalid applications type ${config.applications.type}`);
 }
 
 module.exports = adapter;

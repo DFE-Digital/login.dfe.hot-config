@@ -1,8 +1,8 @@
-const { getOIDCClients } = require('../../infrastructure/storage');
+const { getAll } = require('../../infrastructure/services');
 
-const getAll = async (req, res) => {
-  const clients = await getOIDCClients(req.header('x-correlation-id'));
+const getAllClients = async (req, res) => {
+  const clients = await getAll();
   res.send(clients);
 };
 
-module.exports = getAll;
+module.exports = getAllClients;

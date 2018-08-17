@@ -11,6 +11,9 @@ const clients = [
     ],
   },
 ];
+const getAll = async () => {
+  return Promise.resolve([]);
+};
 
 const getById = async (id) => {
   return Promise.resolve(clients.find(c => c.client_id.toLowerCase() === id.toLowerCase()));
@@ -18,4 +21,5 @@ const getById = async (id) => {
 
 module.exports = {
   getById,
+  getAll,
 };

@@ -1,12 +1,13 @@
-const { getOIDCClients } = require('../../infrastructure/storage');
+const { getById } = require('../../infrastructure/applications');
+const { mapEntity } = require('../../../src/app/OIDCClients/data');
 
 const getSingle = async (req, res) => {
-  const clients = await getOIDCClients(req.header('x-correlation-id'));
-  const client = clients ? clients.find(c => c.client_id.toLowerCase() === req.params.id.toLowerCase()) : undefined;
+  const client = await getById(req.params.id);
   if (!client) {
     return res.status(404).send();
   }
-  return res.send(client);
+  const entity = await mapEntity(client);
+  return res.send(entity);
 };
 
 module.exports = getSingle;

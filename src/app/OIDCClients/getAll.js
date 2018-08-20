@@ -1,8 +1,10 @@
-const { getOIDCClients } = require('../../infrastructure/storage');
+const { getAll } = require('../../infrastructure/applications');
+const { mapEntities } = require('../../../src/app/OIDCClients/data');
 
-const getAll = async (req, res) => {
-  const clients = await getOIDCClients(req.header('x-correlation-id'));
-  res.send(clients);
+const getAllClients = async (req, res) => {
+  const clients = await getAll();
+  const map = await mapEntities(clients.services);
+  res.send(map);
 };
 
-module.exports = getAll;
+module.exports = getAllClients;

@@ -3,11 +3,33 @@ jest.mock('./../../../src/infrastructure/config', () => {
     storage: {
       type: 'static',
     },
+    applications: {
+      type: 'static',
+    },
   };
 });
-jest.mock('./../../../src/infrastructure/storage');
 
-const { getOIDCClients } = require('./../../../src/infrastructure/storage');
+jest.mock('./../../../src/app/OIDCClients/data', () => {
+  return {
+    mapEntity: jest.fn().mockReturnValue([
+      {
+        friendlyName: 'Client One',
+        client_id: 'client1',
+        client_secret: 'super-secret-string',
+        redirect_uris: [
+          'https://client.one.test/auth/cb',
+        ],
+        post_logout_redirect_uris: [
+          'https://client.one.test/signout/complete',
+        ],
+      },
+    ]),
+  };
+});
+
+jest.mock('./../../../src/infrastructure/applications');
+
+const { getById } = require('../../../src/infrastructure/applications');
 const getSingle = require('./../../../src/app/OIDCClients/getSingle');
 
 const req = {
@@ -23,16 +45,16 @@ const res = {
 
 describe('when getting single OIDC client', () => {
   beforeEach(() => {
-    getOIDCClients.mockReset().mockReturnValue([
+    getById.mockReset().mockReturnValue([
       {
         friendlyName: 'Client One',
         client_id: 'client1',
         client_secret: 'super-secret-string',
         redirect_uris: [
-          'https://client.one.test/auth/cb'
+          'https://client.one.test/auth/cb',
         ],
         post_logout_redirect_uris: [
-          'https://client.one.test/signout/complete'
+          'https://client.one.test/signout/complete',
         ],
       },
     ]);
@@ -47,31 +69,23 @@ describe('when getting single OIDC client', () => {
     await getSingle(req, res);
 
     expect(res.send.mock.calls).toHaveLength(1);
-    expect(res.send.mock.calls[0][0]).toEqual({
-      friendlyName: 'Client One',
-      client_id: 'client1',
-      client_secret: 'super-secret-string',
-      redirect_uris: [
-        'https://client.one.test/auth/cb'
-      ],
-      post_logout_redirect_uris: [
-        'https://client.one.test/signout/complete'
-      ],
-    });
-  });
-
-  it('then it should send 404 if not found', async () => {
-    req.params.id = 'client2';
-
-    await getSingle(req, res);
-
-    expect(res.status.mock.calls).toHaveLength(1);
-    expect(res.status.mock.calls[0][0]).toBe(404);
-    expect(res.send.mock.calls).toHaveLength(1);
+    expect(res.send.mock.calls[0][0]).toEqual([
+      {
+        friendlyName: 'Client One',
+        client_id: 'client1',
+        client_secret: 'super-secret-string',
+        redirect_uris: [
+          'https://client.one.test/auth/cb',
+        ],
+        post_logout_redirect_uris: [
+          'https://client.one.test/signout/complete',
+        ],
+      },
+    ]);
   });
 
   it('then it should send 404 if no clients', async () => {
-    getOIDCClients.mockReturnValue([]);
+    getById.mockReturnValue();
 
     await getSingle(req, res);
 
@@ -81,19 +95,12 @@ describe('when getting single OIDC client', () => {
   });
 
   it('then it should send 404 if clients is null', async () => {
-    getOIDCClients.mockReturnValue(null);
+    getById.mockReturnValue(null);
 
     await getSingle(req, res);
 
     expect(res.status.mock.calls).toHaveLength(1);
     expect(res.status.mock.calls[0][0]).toBe(404);
     expect(res.send.mock.calls).toHaveLength(1);
-  });
-
-  it('then it should send correlation id to storage', async () => {
-    await getSingle(req, res);
-
-    expect(getOIDCClients.mock.calls).toHaveLength(1);
-    expect(getOIDCClients.mock.calls[0][0]).toBe('correlation-id');
   });
 });

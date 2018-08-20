@@ -1,19 +1,12 @@
 const { getById } = require('../../infrastructure/services');
+const { mapEntity } = require('../../../src/app/OIDCClients/data');
 
 const getSingle = async (req, res) => {
   const client = await getById(req.params.id);
   if (!client) {
     return res.status(404).send();
   }
-  const entity = {
-    friendlyName: client.name,
-    client_id: client.relyingParty.client_id,
-    client_secret: client.relyingParty.client_secret,
-    api_secret: client.relyingParty.api_secret || undefined,
-    redirect_uris: client.relyingParty.redirect_uris,
-    post_logout_redirect_uris: client.relyingParty.post_logout_redirect_uris,
-    params: client.relyingParty.params,
-  };
+  const entity = await mapEntity(client);
   return res.send(entity);
 };
 

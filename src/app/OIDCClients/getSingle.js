@@ -1,4 +1,4 @@
-const { getById } = require('../../infrastructure/services');
+const { getById } = require('../../infrastructure/applications');
 const { mapEntity } = require('../../../src/app/OIDCClients/data');
 
 const getSingle = async (req, res) => {

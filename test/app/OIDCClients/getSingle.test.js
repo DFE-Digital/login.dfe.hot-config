@@ -27,9 +27,9 @@ jest.mock('./../../../src/app/OIDCClients/data', () => {
   };
 });
 
-jest.mock('./../../../src/infrastructure/services');
+jest.mock('./../../../src/infrastructure/applications');
 
-const { getById } = require('./../../../src/infrastructure/services');
+const { getById } = require('../../../src/infrastructure/applications');
 const getSingle = require('./../../../src/app/OIDCClients/getSingle');
 
 const req = {

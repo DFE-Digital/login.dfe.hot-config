@@ -1,4 +1,4 @@
-const { getAll } = require('../../infrastructure/services');
+const { getAll } = require('../../infrastructure/applications');
 const { mapEntities } = require('../../../src/app/OIDCClients/data');
 
 const getAllClients = async (req, res) => {

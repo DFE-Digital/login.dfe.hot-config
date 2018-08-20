@@ -9,7 +9,7 @@ jest.mock('./../../../src/infrastructure/config', () => {
   };
 });
 
-jest.mock('./../../../src/infrastructure/services');
+jest.mock('./../../../src/infrastructure/applications');
 jest.mock('./../../../src/app/OIDCClients/data', () => {
   return {
     mapEntities: jest.fn().mockReturnValue([
@@ -28,7 +28,7 @@ jest.mock('./../../../src/app/OIDCClients/data', () => {
   };
 });
 
-const { getAll } = require('./../../../src/infrastructure/services');
+const { getAll } = require('../../../src/infrastructure/applications');
 const getAllClients = require('./../../../src/app/OIDCClients/getAll');
 
 const req = {

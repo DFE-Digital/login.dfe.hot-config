@@ -9,6 +9,24 @@ jest.mock('./../../../src/infrastructure/config', () => {
   };
 });
 
+jest.mock('./../../../src/app/OIDCClients/data', () => {
+  return {
+    mapEntity: jest.fn().mockReturnValue([
+      {
+        friendlyName: 'Client One',
+        client_id: 'client1',
+        client_secret: 'super-secret-string',
+        redirect_uris: [
+          'https://client.one.test/auth/cb',
+        ],
+        post_logout_redirect_uris: [
+          'https://client.one.test/signout/complete',
+        ],
+      },
+    ]),
+  };
+});
+
 jest.mock('./../../../src/infrastructure/services');
 
 const { getById } = require('./../../../src/infrastructure/services');
@@ -29,6 +47,7 @@ describe('when getting single OIDC client', () => {
   beforeEach(() => {
     getById.mockReset().mockReturnValue([
       {
+        friendlyName: 'Client One',
         client_id: 'client1',
         client_secret: 'super-secret-string',
         redirect_uris: [
@@ -52,6 +71,7 @@ describe('when getting single OIDC client', () => {
     expect(res.send.mock.calls).toHaveLength(1);
     expect(res.send.mock.calls[0][0]).toEqual([
       {
+        friendlyName: 'Client One',
         client_id: 'client1',
         client_secret: 'super-secret-string',
         redirect_uris: [

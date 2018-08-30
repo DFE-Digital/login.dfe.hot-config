@@ -2,6 +2,17 @@ const mapEntity = async (entity) => {
   if (!entity) {
     return undefined;
   }
+
+  const params = {};
+  if (entity.relyingParty.params) {
+    Object.keys(entity.relyingParty.params).forEach((key) => {
+      let value = entity.relyingParty.params[key];
+      if (key === 'digipassRequired' || key === 'supportsUsernameLogin') {
+        value = value === '1' || value.toLowerCase() === 'true';
+      }
+      params[key] = value;
+    });
+  }
   return {
     friendlyName: entity.name,
     client_id: entity.relyingParty.client_id,
@@ -13,7 +24,7 @@ const mapEntity = async (entity) => {
     grant_types: entity.relyingParty.grant_types,
     service_home: entity.relyingParty.service_home,
     post_logout_redirect_uris: entity.relyingParty.post_logout_redirect_uris,
-    params: entity.relyingParty.params,
+    params,
     postResetUrl: entity.relyingParty.postResetUrl,
   };
 };
